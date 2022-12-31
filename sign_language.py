@@ -23,8 +23,17 @@ while True:
             for id ,lm in enumerate(hand_landmark.landmark):
                 lm_list.append(lm)
 
-             #Code goes here   
-
+             #Code goes here
+            finger_tips=[8,12,16,20]
+            for tip in finger_tips: #getting the landmark tip position and drawing blue circle 
+                    x,y= int(lm_list[tip].x*w), int(lm_list[tip].y*h) 
+                    cv2.circle(img, (x,y), 15, (255, 0, 0), cv2.FILLED)
+            #if finger folded changing color to green 
+            if lm_list[tip].x < lm_list[tip - 3].x: 
+                cv2.circle(img, (x,y), 15, (0, 255, 0), cv2.FILLED) 
+                finger_fold_status.append(True) 
+            else: 
+                finger_fold_status.append(False)
 
 
             mp_draw.draw_landmarks(img, hand_landmark,
